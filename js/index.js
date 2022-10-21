@@ -1,4 +1,6 @@
 const gitForm = document.getElementById('github-form')
+const userList = document.querySelector('#user-list')
+
 
 gitForm.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -12,6 +14,30 @@ gitForm.addEventListener('submit', (e) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
+      renderUser(data.items[0])
     })
-})
+    })
+
+
+// keys:
+// avatar: avatar_url
+//URL: html_url
+//username: login 
+// id: id
+
+function renderUser(user) {
+  const li = document.createElement('li')
+  const username = document.createElement('h1')
+  const avatar = document.createElement('img')
+  const pageLink = document.createElement('a')
+
+  username.textContent = user.login
+  avatar.src = user.avatar_url
+  pageLink.href = user.html_url
+  pageLink.textContent = `Go to ${user.login}'s page!`
+
+  userList.append(li)
+  li.append(username, avatar, pageLink)
+  console.log()
+}
+
